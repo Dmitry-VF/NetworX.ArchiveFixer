@@ -17,8 +17,9 @@ var files = Directory.GetFiles(input);
 
 foreach (var file in files)
 {
-    Console.WriteLine($"Checking {Path.GetFileName(file)}");
+    if (Path.GetFileName(file).Contains(".bak")) continue;
 
+    Console.WriteLine($"Checking {Path.GetFileName(file)}");
     var csvEntries = ReadCSV(file);
     var headers = "RecordType,Reference,PropertyName,LastEdited,EditedBy,OldValue,Value,IsLegacyData,BranchCode,IsExported".Split(",");
 
