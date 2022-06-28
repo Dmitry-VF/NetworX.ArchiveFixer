@@ -38,16 +38,25 @@ foreach (var file in files)
 
         var rowArray = entry.ToList();
 
-        var fixedrowArray = rowArray;//.Select(x => x.Replace("\n", "")).Select(x => x.Replace("\r", "")).ToList();
+        //.Select(x => x.Replace("\n", "")).Select(x => x.Replace("\r", "")).ToList();
 
         if (entry.Length < 10 && entry.Length >= 5)
         {
-
-            fixedrowArray.Insert(5, "null");
-            fixedrowArray.Add("FALSE");
-
+            rowArray.Insert(5, "null");
         }
-        csvEntries[i] = fixedrowArray.ToArray();
+
+        if (entry.Length < 10 && entry.Length > 5)
+        {
+            rowArray.Add("FALSE");
+        }
+
+        if (entry.Length < 10 && entry.Length < 5)
+        {
+            rowArray.Add("FALSE");
+        }
+
+
+        csvEntries[i] = rowArray.ToArray();
     }
 
     File.Copy(file, $"{file}.bak", true);
