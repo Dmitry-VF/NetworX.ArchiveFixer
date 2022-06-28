@@ -23,6 +23,7 @@ foreach (var file in files)
     var csvEntries = ReadCSV(file);
     var headers = "RecordType,Reference,PropertyName,LastEdited,EditedBy,OldValue,Value,IsLegacyData,BranchCode,IsExported".Split(",");
 
+    //replace headers
     csvEntries[0] = headers;
 
     for (var i = 1; i < csvEntries.Count; i++)
@@ -36,7 +37,7 @@ foreach (var file in files)
         if (entry.Length < 10 && entry.Length > 0)
         {
             rowArray.Insert(5, "null");
-            rowArray.Insert(rowArray.Count, "FALSE");
+            rowArray.Add("FALSE");
         }
         csvEntries[i] = rowArray.ToArray();
     }
@@ -60,10 +61,9 @@ foreach (var file in files)
 
 Console.WriteLine("Fixed");
 
-static List<string[]> ReadCSV(string absolutePath)
+List<string[]> ReadCSV(string absolutePath)
 {
     var result = new List<string[]>();
-    string value;
 
     var config = new CsvConfiguration(CultureInfo.InvariantCulture)
     {
@@ -73,7 +73,7 @@ static List<string[]> ReadCSV(string absolutePath)
     using (var reader = new StreamReader(absolutePath))
     using (var parser = new CsvParser(reader, config))
     {
-        while (parser.Read() != null)
+        while (parser.Read())
         {
             var row = parser.Record;
             result.Add(row);
