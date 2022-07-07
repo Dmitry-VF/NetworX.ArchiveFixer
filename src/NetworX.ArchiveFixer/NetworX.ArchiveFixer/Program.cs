@@ -18,8 +18,6 @@ var files = Directory.GetFiles(input);
 foreach (var file in files)
 {
     string text = File.ReadAllText(file);
-    text = text.Replace("some text", "new value");
-    File.WriteAllText("test.txt", text);
 
     if (Path.GetFileName(file).Contains(".bak")) continue;
 
@@ -48,7 +46,7 @@ foreach (var file in files)
         if (entry.Length < 10 && entry.Length > 5)
         {
             rowArray.Add("FALSE");
-        }
+        }   
 
         if (entry.Length < 10 && entry.Length < 5)
         {
